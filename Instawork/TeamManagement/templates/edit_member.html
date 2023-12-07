@@ -1,0 +1,93 @@
+<head>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+    
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>edit Page</title>
+    <style>
+        .table-container {
+            display: block;
+            position: relative;
+            width: 100%;
+            max-width: 400pt;
+            padding-top: 20pt;
+            margin: auto;
+        }
+
+        .table {
+            width: 100%;
+        }
+        .table-container h1 {
+            font-size: 1.5em;
+            margin-left: 0;
+            text-align: center;
+        }
+        .table-container h2{
+            font-size: 1em;
+            margin-left: 0;
+            text-align: center;
+        }
+        hr {
+            width: 100%;
+            border-top: 1px solid lightgrey;
+            margin: 20px 0;
+        }
+        .button-container {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 20px;
+        }
+        .form-group label,
+        .form-group input,
+        .form-group textarea {
+            width: 100%;
+            margin-bottom: 0.5em;
+        }
+        .form-control {
+            max-width: 100%;
+          
+        }
+        .delete-button {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+        }
+        .save-button {
+            position: absolute;
+            bottom: 0;
+            right: 0;
+        }
+       
+    </style>
+</head>
+
+<body>
+    <div class="table-container">
+        <table class="table">
+            <h1>Edit team member</h1>
+            <h2>Edit contact info and role</h2>
+            <hr>
+            <form method="POST" class="w-100">
+                {% csrf_token %}
+                {% for field in form %}
+                    <div class="form-group">
+                        {% if forloop.first %}
+                            <label for="{{ field.id_for_label }}">{{ field.label }}</label>
+                            {{ field}}
+                        {% elif field.name == 'role' %}
+                            <div class="radio-group">
+                                <span class="radio-label">{{ field.label_tag }}</span>
+                                    {{ field }}       
+                            </div>
+                        {% else %}
+                            {{field }}
+                        {% endif %}
+                    </div>
+                {% endfor %}
+                <div class="button-container">
+                    <button class="btn btn-outline-danger" type="submit" name="action" value="delete">Delete</button>
+                    <button class="btn btn-primary" type="submit" name="action" value="save">Save</button>
+                </div>
+            </form>
+        </table>
+    </div>
+</body>

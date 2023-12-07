@@ -1,0 +1,148 @@
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>List Page</title>
+  <style>
+    .table-container {
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      width: 100%;
+      max-width: 400pt;
+      padding-top: 20pt;
+      margin: auto;
+    }
+
+    .table-container h2 {
+      align-self: flex-start;
+    }
+
+    .table-container a {
+      align-self: flex-end;
+      margin-bottom: 10px;
+    }
+
+    .table {
+      border-collapse: collapse;
+      width: 100%;
+    }
+
+    .table td {
+      position: relative;
+      border-right: none;
+      border-left: none;
+      padding: 25px;
+      border-top: 1px solid lightgrey;
+      border-bottom: 1px solid lightgrey;
+    }
+
+    .table th {
+      font-size: 1.5em;
+
+      padding: 60px;
+      text-align: left;
+    }
+
+    .table tr {
+      border: 1px solid lightgrey;
+      border-left: none;
+      border-right: none;
+
+      text-align: left;
+    }
+
+    .team-members-container {
+      width: 90%;
+      margin: auto;
+      font-family: Arial, sans-serif;
+    }
+
+    .team-member {
+      display: flex;
+      align-items: center;
+      border-bottom: 1px solid #ccc;
+      padding: 10px 0;
+    }
+
+    .team-member:last-child {
+      border-bottom: none;
+    }
+
+
+    .profile-pic {
+      border-radius: 50%;
+      margin-right: 15px;
+      background-color: #ddd;
+
+      width: 50px;
+      height: 50px;
+    }
+
+    .add-member-link {
+      font-size: xx-large;
+      position: absolute;
+      right: 30;
+      top: 30;
+      text-decoration: none;
+    }
+
+    .member-info {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .member-name {
+      font-size: 1em;
+      color: #333;
+    }
+
+    .member-role,
+    .member-phone,
+    .member-email {
+      font-size: 0.8em;
+      color: #666;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="table-container">
+
+    <table class="table">
+      <thead>
+        <tr>
+          <th colspan="3">
+            Team members
+            <a class="add-member-link" href="{% url 'add_member' %}">+</a>
+          </th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for member in members %}
+        <tr onclick="window.location.href='{% url 'edit_member' member.id %}';" style="cursor: pointer;">
+          <td>
+            <div class="profile-pic"></div>
+          </td>
+          <td>
+            <div class="member-info">
+              <span class="member-name">{{ member.first_name }} {{ member.last_name }}
+                <span class="member-role">
+                  {% if member.role %}
+                  (admin)
+                  {% endif %}
+                </span>
+              </span>
+              <span class="member-phone">{{ member.phone_number }}</span>
+              <span class="member-email">{{ member.email }}</span>
+            </div>
+          </td>
+          </a>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+</body>
