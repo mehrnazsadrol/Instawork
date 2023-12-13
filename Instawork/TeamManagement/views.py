@@ -1,37 +1,48 @@
-from django.shortcuts import render, redirect
+from django.views.generic import ListView, UpdateView, CreateView
+from django.shortcuts import redirect
+from django.urls import reverse_lazy
 from .models import TeamMember
 from .forms import TeamMemberForm
 
 
-def team_members(request):
-    members = TeamMember.objects.all()
-    return render(request, 'team_members.html', {'members': members})
+class TeamMemberListView(ListView):
+    model = TeamMember
+    template_name = 'team_members.html'
+    context_object_name = 'members'
 
 
-def add_member(request):
-    if request.method == "POST":
-        form = TeamMemberForm(request.POST)
-        if form.is_valid():
-            form.save()
-            return redirect('team_members')
-    else:
-        form = TeamMemberForm()
-    return render(request, 'add_member.html', {'form': form})
+"""
+View for creating a team member.
+
+"""
 
 
-def edit_member(request, member_id):
+class TeamMemberCreateView(CreateView):
+    model = TeamMember
+    form_class = TeamMemberForm
+    template_name = 'add_member.html'
+    success_url = reverse_lazy('team_members')
 
-    member = TeamMember.objects.get(id=member_id)
-    if request.method == "POST":
+
+"""
+View for updating a team member's information.
+
+Methods:
+    post(request, *args, **kwargs): Handles the POST request for updating the team member.
+"""
+
+
+class TeamMemberUpdateView(UpdateView):
+
+    model = TeamMember
+    form_class = TeamMemberForm
+    template_name = 'edit_member.html'
+    success_url = reverse_lazy('team_members')
+
+    def post(self, request, *args, **kwargs):
+        self.object = self.get_object()
         if request.POST.get('action') == 'delete':
-            member.delete()
-
-        else: 
-            form = TeamMemberForm(request.POST, instance=member)
-            if form.is_valid():
-                form.save()        
-        return redirect('team_members')  
-    else:
-        form = TeamMemberForm(instance=member)
-
-    return render(request, 'edit_member.html', {'form': form})
+            self.object.delete()
+            return redirect(self.success_url)
+        else:
+            return super(TeamMemberUpdateView, self).post(request, *args, **kwargs)
