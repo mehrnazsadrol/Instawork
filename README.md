@@ -26,6 +26,6 @@ https://docs.djangoproject.com/en/1.8/howto/windows/#:~:text=Install%20Django%C2
 
 You should be able to view the app in your local host. 
 
-
+##
 Author : Mehrnaz Sadroleslami 
 Feel free to contribute! 
