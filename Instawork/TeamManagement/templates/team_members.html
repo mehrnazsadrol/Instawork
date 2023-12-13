@@ -1,30 +1,9 @@
-<html lang="en">
-
 <head>
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>List Page</title>
   <style>
-    .table-container {
-      position: relative;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      width: 100%;
-      max-width: 400pt;
-      padding-top: 20pt;
-      margin: auto;
-    }
-
-    .table-container h2 {
-      align-self: flex-start;
-    }
-
-    .table-container a {
-      align-self: flex-end;
-      margin-bottom: 10px;
-    }
-
     .table {
       border-collapse: collapse;
       width: 100%;
@@ -40,8 +19,6 @@
     }
 
     .table th {
-      font-size: 1.5em;
-
       padding: 60px;
       text-align: left;
     }
@@ -52,6 +29,31 @@
       border-right: none;
 
       text-align: left;
+    }
+
+    .table-container {
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      width: 100%;
+      max-width: 400pt;
+      padding-top: 20pt;
+      margin: auto;
+    }
+
+    .table-container h1 {
+      font-size: 1.5em;
+    }
+
+    .table-container h2 {
+      font-size: 1em;
+      align-self: flex-start;
+    }
+
+    .table-container a {
+      align-self: flex-end;
+      margin-bottom: 10px;
     }
 
     .team-members-container {
@@ -115,7 +117,16 @@
       <thead>
         <tr>
           <th colspan="3">
-            Team members
+            <h1>
+              Team members
+              <h2 class="subtitle">
+                {% if members_count == 1 %}
+                You have {{ 1 }} team member.
+                {% else %}
+                You have {{ members_count }} team members.
+                {% endif %}
+              </h2>
+            </h1>
             <a class="add-member-link" href="{% url 'add_member' %}">+</a>
           </th>
         </tr>

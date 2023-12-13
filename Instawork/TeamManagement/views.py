@@ -9,7 +9,10 @@ class TeamMemberListView(ListView):
     model = TeamMember
     template_name = 'team_members.html'
     context_object_name = 'members'
-
+    def get_context_data(self, **kwargs):
+        context = super(TeamMemberListView, self).get_context_data(**kwargs)
+        context['members_count'] = context['members'].count()
+        return context
 
 """
 View for creating a team member.
