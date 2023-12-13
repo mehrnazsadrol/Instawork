@@ -1,4 +1,5 @@
-# Team Management Application ( Instawork_take_home_project)
+# Team Management Application    
+( Instawork_take_home_project)
 
 ## Overview
 This Django web application is designed to manage team members within an organization. 
